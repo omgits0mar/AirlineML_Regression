@@ -18,17 +18,11 @@ df["Day"]=pd.DatetimeIndex(df["date"]).day
 lbl_enc = LabelEncoder()
 df['ch_code'] = lbl_enc.fit_transform(df[["ch_code"]])
 
-#%%
-
 df["dep_time"]=pd.to_datetime(df["dep_time"])
 df['dep_time'] = df['dep_time'].dt.strftime("%-H:%M")
 
-#%%
-
 df["dep_hour"]=pd.DatetimeIndex(df["dep_time"]).hour
 df["dep_minute"]=pd.DatetimeIndex(df["dep_time"]).minute
-
-#%%
 
 df=df.drop(["date","airline","dep_time"],axis=1) # drop initial columns
 X = df.loc[:, df.columns != 'price']
