@@ -105,25 +105,26 @@ print(df['type'])
 #%% md
 
 ### Data preprocessing : 'route'
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 
-#%% md
-
-### Data preprocessing : dropping unnecessary cols. & extract X,Y
+## sum hours + mins in one col (departure_time, arrival_time)*****
+## drop year (as all are duplicate)
+##
 
 #%%
 
-df=df.drop(["date","airline","dep_time","time_taken","arr_time"],axis=1) #drop initial column
+df['source']=df['route'].str.split( ', ').str.get(0).str.split(':').str.get(1)
+df['destination']=df['route'].str.split( ', ').str.get(1).str.split(':').str.get(1).str.split('}').str.get(0)
+l = LabelEncoder()
+df['source'] = l.fit_transform(df[['source']])
+m = LabelEncoder()
+df['destination'] = m.fit_transform(df[['destination']])
+
+print (df['source'])
+print (df['destination'])
+
+#%%
+
+df=df.drop(["date","airline","dep_time","time_taken","arr_time","route","Year"],axis=1) #drop initial column
 X = df.loc[:, df.columns != 'price']
 Y = df['price']
 print(X)
